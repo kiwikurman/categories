@@ -335,25 +335,25 @@ for (var i=1; i < $("table.dataTable.summaryGrid > tbody").length; i++) {
 var row_string = '<tr><td></td><td></td><td></td><td>{0}</td><td>{1}</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'; 
  
 Object.keys(sums).forEach(function(category) { 
-var x = $(new_body).find("tr[category='" + category + "']:last"); 
-if (typeof x !== 'undefined') { 
-x.after(row_string.replace("{0}", category).replace("{1}", sums[category])); 
-}	 
+  var x = $(new_body).find("tr[category='" + category + "']:last"); 
+  if (typeof x !== 'undefined') { 
+    x.after(row_string.replace("{0}", category).replace("{1}", sums[category])); 
+  }	 
 }) 
  
 $("table.dataTable.summaryGrid").delegate("tr", "click", function(e) { 
-    var name = $(e.currentTarget.children[1]).find("span").attr("title"); 
-var available_categories = "\n"; 
-Object.keys(colors).forEach(function(item,index) { 
-available_categories += (item + "\n"); 
-}) 
+  var name = $(e.currentTarget.children[1]).find("span").attr("title"); 
+  var available_categories = "\n"; 
+  Object.keys(colors).forEach(function(item,index) { 
+    available_categories += (item + "\n"); 
+  }) 
  
-    var new_category = prompt("add " + name + " to category: " + available_categories, "unknown"); 
-for (var i = 0; i < categorized_labels.values.length; i++) { 
-  if (categorized_labels.values[i].label.localeCompare(name)) { 
-categorized_labels.values[i].category = new_category; 
+  var new_category = prompt("add " + name + " to category: " + available_categories, "unknown"); 
+  for (var i = 0; i < categorized_labels.values.length; i++) { 
+    if (categorized_labels.values[i].label.localeCompare(name)) { 
+      categorized_labels.values[i].category = new_category; 
+    } 
   } 
-} 
-e.currentTarget.setAttribute("category", new_category); 
+  e.currentTarget.setAttribute("category", new_category); 
 }); 
 
