@@ -3,7 +3,10 @@
   "version": "1.0",
   "manifest_version": 2,
   "description": "gorup credit card expenses into catagories",
-  "background": {"pages": ["background.html"]},
+  "background": {
+	  "pages": ["background.html"],
+  	  "scripts": ["background.js"]
+  },
   "browser_action": {
     "name": "categorize",
     "icons": ["icon.png"],
@@ -13,5 +16,6 @@
   "content_scripts": [ {
     "js": [ "jquery.min.js", "categorize.js" ],
     "matches": [ "https://*/*CreditCard*"]
-  }]
+  }],
+  "permissions": ["storage"]
 }
