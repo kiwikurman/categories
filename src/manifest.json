@@ -7,10 +7,11 @@
   "browser_action": {
     "name": "categorize",
     "icons": ["icon.png"],
-    "default_icon": "icon.png"
+    "default_icon": "icon.png",
+    "default_popup": "popup.html" 
   },
   "content_scripts": [ {
-    "js": [ "jquery.min.js", "background.js" ],
+    "js": [ "jquery.min.js", "categorize.js" ],
     "matches": [ "https://*/*CreditCard*"]
   }]
 }
