@@ -17,5 +17,5 @@
     "js": [ "jquery.min.js", "categorize.js" ],
     "matches": [ "https://*/*CreditCard*"]
   }],
-  "permissions": ["storage"]
+  "permissions": ["storage", "tabs"]
 }

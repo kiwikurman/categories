@@ -10,16 +10,21 @@ chrome.runtime.onMessage.addListener(
     console.log(sender.tab ?
                 "from a content script:" + sender.tab.url :
                 "from the extension");
-    if (request.status == "categories and colors") {
+    if (request.what == "categories and colors") {
       categorized_labels = request.the_categories;
       colors = request.the_colors;
      
-      sums = {}; 	    
+      sums = {}; 
+      name_category_map = {};
       set_attributes();
       
       sum_prices_per_category();
       add_colors();
       display_sorted_rows();
+    } else if (request.what == "get_name_category_map") {
+      console.log("got request for name-category map");
+      sendResponse({the_name_category_map: name_category_map});
+      //get one unknown and send the name...
     }
   }
 );
@@ -35,6 +40,7 @@ function set_attributes() {  //set the category attributes
             this.setAttribute("category", categorized_labels.values[i].category); 
         } 
     } 
+    name_category_map[name] = this.getAttribute("category");
   }); 
 }
   //sum evry category 
@@ -64,7 +70,7 @@ function display_sorted_rows() {
    
   //put everything in one table 
   var old_body = $("table.dataTable.summaryGrid > tbody")[0]; 
-  var new_body = document.createElement('tbody'); 
+  new_body = document.createElement('tbody'); 
   for (var i = 0; i < sorted_matched.length; i++) { 
       new_body.appendChild(sorted_matched[i].cloneNode(true)); 
   } 
