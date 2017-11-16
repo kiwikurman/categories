@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener(
       display_sorted_rows();
     } else if (request.what == "get_name_category_map") {
       console.log("got request for name-category map");
-      sendResponse({the_name_category_map: name_category_map});
+      sendResponse({the_name_category_map: name_category_map, what: "map"});
       //get one unknown and send the name...
     }
   }
