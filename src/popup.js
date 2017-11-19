@@ -8,17 +8,28 @@ document.addEventListener('DOMContentLoaded', function() {
         set_category_to_local_storage();
   });
 
-  get_map_from_content();
+  var category_map = get_map_from_content();
+  var unique_categories = [];
+  category_map.forEach(function(element) {
+    if (unique_categories.includes(element.category) == false) {
+      unique_categories.push(element.category);
+    }
+  });
+  set_sellection_list(unique_categories);
 	
 });
 
+function set_selection_list(unique_categories) {
+  
+
+}
 
 function get_map_from_content() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {what: "get_name_category_map"}, function(response) {
       if (response !== undefined && response.what == "map" ) {
 	var labels = Object.keys(response.the_name_category_map);
-	var category_map = response.the_name_category_map;i
+	var category_map = response.the_name_category_map;
 	document.getElementById('category_label').innerHTML = "no unknow catagories matched";
 	for (var i =0; i < labels.length; i++) {
 	  if (category_map[labels[i]] == "unknown") {
@@ -29,6 +40,7 @@ function get_map_from_content() {
       }
     });
   });
+  return category_map;
 }
 
 //get the new category from input
@@ -38,16 +50,9 @@ function set_category_to_local_storage() {
   var the_label = document.getElementById('category_label').innerHTML;
   var user_input_category = document.getElementById("category_input").value;
 
-      document.getElementById('category_label').innerHTML = "1";
   chrome.storage.local.get("the_categories", function (obj) {
-
-      document.getElementById('category_label').innerHTML = "2";
     var categorized_labels = obj.the_categories;
-
-      document.getElementById('category_label').innerHTML = "3";
     categorized_labels.values.push({label: the_label, category: user_input_category});
-
-      document.getElementById('category_label').innerHTML = "4";
     chrome.storage.local.set({'the_categories': categorized_labels}, function() {
       console.log('dict  saved');
       document.getElementById('category_label').innerHTML = "no unknow catagories matched";
