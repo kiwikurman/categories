@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   var category_map = get_map_from_content();
+  
   var unique_categories = [];
   category_map.forEach(function(element) {
     if (unique_categories.includes(element.category) == false) {
@@ -16,12 +17,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   set_sellection_list(unique_categories);
-	
 });
 
-function set_selection_list(unique_categories) {
-  
 
+
+function set_selection_list(unique_categories) {
+  var categories = document.getElementById('category_input_selector');
+  unique_categories.forEach(function(element) {
+    var opt = document.createElement('option');
+    opt.innerHTML = element;
+    opt.value = element;
+    sel.appendChild(opt);
+  });
 }
 
 function get_map_from_content() {

@@ -2,7 +2,6 @@ debugger;
 
 
 chrome.runtime.sendMessage({what: "get_dict"}, function(response) {
-  console.log(response.farewell);
 });
 
 chrome.runtime.onMessage.addListener(
