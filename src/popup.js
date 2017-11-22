@@ -8,47 +8,40 @@ document.addEventListener('DOMContentLoaded', function() {
         set_category_to_local_storage();
   });
 
-  var category_map = get_map_from_content();
-  
-  var unique_categories = [];
-  category_map.forEach(function(element) {
-    if (unique_categories.includes(element.category) == false) {
-      unique_categories.push(element.category);
-    }
-  });
-  set_sellection_list(unique_categories);
+  set_selection_list();
 });
 
 
 
-function set_selection_list(unique_categories) {
-  var categories = document.getElementById('category_input_selector');
-  unique_categories.forEach(function(element) {
-    var opt = document.createElement('option');
-    opt.innerHTML = element;
-    opt.value = element;
-    sel.appendChild(opt);
-  });
-}
-
-function get_map_from_content() {
+function set_selection_list() {
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {what: "get_name_category_map"}, function(response) {
       if (response !== undefined && response.what == "map" ) {
+	var categories_selector = document.getElementById('category_input_selector');
+	while (categories_selector.firstChild) {
+	  categories_selector.removeChild(categories_selector.firstChild);
+	}
+
 	var labels = Object.keys(response.the_name_category_map);
 	var category_map = response.the_name_category_map;
-	document.getElementById('category_label').innerHTML = "no unknow catagories matched";
-	for (var i =0; i < labels.length; i++) {
-	  if (category_map[labels[i]] == "unknown") {
-	    document.getElementById('category_label').innerHTML = labels[i];
-	    break;
+	    console.log(category_map);
+	var unique_categories = [];
+  	for (var i in category_map) {
+	  if (unique_categories.includes(category_map[i]) == false) {
+	    unique_categories.push(category_map[i]);
+	    var opt = document.createElement('option');
+	    opt.innerHTML = category_map[i];
+	    opt.value = category_map[i];
+	    categories_selector.appendChild(opt);
 	  }
 	}
       }
     });
   });
-  return category_map;
 }
+
+
+
 
 //get the new category from input
 //set to dict in local storage

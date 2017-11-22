@@ -1,4 +1,3 @@
-debugger;
 
 
 chrome.runtime.sendMessage({what: "get_dict"}, function(response) {
@@ -23,7 +22,6 @@ chrome.runtime.onMessage.addListener(
     } else if (request.what == "get_name_category_map") {
       console.log("got request for name-category map");
       sendResponse({the_name_category_map: name_category_map, what: "map"});
-      //get one unknown and send the name...
     }
   }
 );
