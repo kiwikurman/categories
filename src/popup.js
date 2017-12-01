@@ -29,13 +29,18 @@ function set_selection_list_from_storage() {
     
     var unique_categories = [];
     categorized_labels.forEach(function(element) {
+      
       if (unique_categories.includes(element.category) == false) {
 	unique_categories.push(element.category);
-	var opt = document.createElement('option');
-	opt.innerHTML = element.category;
-	opt.value = element.category;
-	categories_selector.appendChild(opt);
       }
+    });
+    unique_categories = unique_categories.sort();
+    
+    unique_categories.forEach(function(element) {
+	var opt = document.createElement('option');
+	opt.innerHTML = element;
+	opt.value = element;
+	categories_selector.appendChild(opt);
     });
   }); 
 }
